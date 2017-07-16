@@ -1,0 +1,99 @@
+#:import Toolbar kivymd.toolbar.Toolbar
+#:import ThemeManager kivymd.theming.ThemeManager
+#:import MDCheckbox kivymd.selectioncontrols.MDCheckbox
+#:import MDSwitch kivymd.selectioncontrols.MDSwitch
+#:import MDList kivymd.list.MDList
+#:import ThreeLineIconListItem kivymd.list.ThreeLineIconListItem
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import colors kivymd.color_definitions.colors
+#:import get_color_from_hex kivy.utils.get_color_from_hex
+#:import MDRaisedButton kivymd.button.MDRaisedButton
+#:import MDLabel kivymd.label.MDLabel
+#:import MDSpinner kivymd.spinner.MDSpinner
+<VpmRoot>:
+	orientation: 'vertical'
+	padding: 0
+    Toolbar:
+        id: toolbar
+        padding: 0
+        title: 'Vk Page Manager'
+        md_bg_color: app.theme_cls.primary_color
+        background_palette: 'Primary'
+        background_hue: '500'
+    BoxLayout:
+        id: bx
+        orientation: 'vertical'
+        padding: dp(5)
+        ScrollView:
+            do_scroll_x: False
+            canvas:
+                Rectangle:
+                    source: 'bg.png'
+                    pos: self.pos
+                    size: self.size
+            MDList:
+                id: pLayout
+
+        ScrollView:
+            do_scroll_x: False
+            size_hint_y: dp(0.3)
+            MDLabel:
+			    id: loglabel
+                text: ' '
+                font_style: 'Subhead'
+                theme_text_color: 'Primary'
+                text_size: self.width, None
+                size_hint_y: None
+                height: self.texture_size[1]
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y:dp(.15)
+        padding: dp(10)
+        spacing: dp(5)
+        MDRaisedButton:
+			id: startButton
+            text: "Start"
+            opposite_colors: True
+            size_hint: None, None
+            size: 4 * dp(48), dp(48)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+            on_release: root.runt()
+        MDRaisedButton:
+            id: sendButton
+			text:'Надіслати'
+			on_release: root.on_send(self)
+            opposite_colors: True
+            size_hint: None, None
+            size: 4 * dp(48), dp(48)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+        MDLabel:
+			id: rLabel
+            text: ''
+            font_style: 'Subhead'
+            theme_text_color: 'Primary'
+            halign: 'center'
+            #valign: 'middle'
+            width: self.texture_size[0]
+        MDSpinner:
+            id: spinner
+            size_hint: None, None
+            size: dp(23), dp(23)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            active: False
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_x:dp(.6)
+            MDLabel:
+				text:'Автопілот'
+                font_style: 'Caption'
+                theme_text_color: 'Secondary'
+                halign: 'right'
+                #valign: 'bottom'
+                width: auto_switch.width
+            MDSwitch:
+                id: auto_switch
+                size_hint:    None, None
+                size:        dp(46), dp(48)
+                pos_hint:    {'center_x': 0.75, 'center_y': 0.5}
+                active:        False
+				on_active: root.auto_pilot_switcher(self)
